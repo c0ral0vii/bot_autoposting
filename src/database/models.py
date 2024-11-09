@@ -14,6 +14,7 @@ class Message(Base):
     content: Mapped[str] = mapped_column(Text)
     photo_url: Mapped[str] = mapped_column(String, nullable=True)
     document_url: Mapped[str] = mapped_column(String, nullable=True)
+    celery_id: Mapped[str] = mapped_column(String, nullable=True)
     # можно еще добавить в зависимости от задачи
     publish_date: Mapped[DateTime] = mapped_column(DateTime)
 
@@ -26,7 +27,7 @@ class Group(Base):
     group_id: Mapped[str] = mapped_column(String, index=True)
     group_name: Mapped[str] = mapped_column(String)
     user_id: Mapped[str] = mapped_column(String, index=True)
-    username: Mapped[str] = mapped_column(String, index=True)  # для чего нужно?
+    group_url: Mapped[str] = mapped_column(String, nullable=True)  # для чего нужно?
 
     messages = relationship("Message", back_populates="group")
 

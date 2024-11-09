@@ -15,11 +15,12 @@ async def telethon_get_account_groups(api_hash: str, api_id: str, phone_number: 
         try:
             await client.start(phone=phone_number)
             dialogs = await client.get_dialogs()
-            groups = [
-                (dialog.id, dialog.title)
-                for dialog in dialogs
-                if dialog.is_group or dialog.is_channel
-            ]
+
+            groups = []
+            for dialog in dialogs:
+                if (dialog.is_group or dialog.is_channel) and hasattr(dialog.entity, 'username') and dialog.entity.username:  # Только публичные группы и каналы
+                    group_url = f"https://t.me/{dialog.entity.username}"
+                    groups.append((dialog.id, dialog.title, group_url))
             return groups
 
         except SessionPasswordNeededError:

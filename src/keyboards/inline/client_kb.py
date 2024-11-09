@@ -45,7 +45,17 @@ def create_post_list_keyboard(posts, page: int = 1, total_pages: int = 1):
     return keyboard
 
 def simple_create_post():
-    skip_button = InlineKeyboardButton(text="Пропустить", callback_data="skip")
+    skip_button = InlineKeyboardButton(text="Пропустить", callback_data="skip_media")
+    cancel_button = InlineKeyboardButton(text="Отмена", callback_data="cancel")
+
+    keyboard = InlineKeyboardMarkup(inline_keyboard=[
+        [skip_button, cancel_button]
+    ])
+
+    return keyboard
+
+def simple_update_post():
+    skip_button = InlineKeyboardButton(text="Оставить", callback_data="skip_changes")
     cancel_button = InlineKeyboardButton(text="Отмена", callback_data="cancel")
 
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
@@ -59,6 +69,16 @@ def simple_cancel():
 
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
         [cancel_button]
+    ])
+
+    return keyboard
+
+def simple_post_delete_update(post):
+    delete_button = InlineKeyboardButton(text="Удалить", callback_data=f"delete_{post.id}")
+    update_button = InlineKeyboardButton(text="Обновить", callback_data=f"update_{post.id}")
+
+    keyboard = InlineKeyboardMarkup(inline_keyboard=[
+        [delete_button, update_button]
     ])
 
     return keyboard
